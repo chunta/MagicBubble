@@ -1,9 +1,4 @@
-import { _decorator, Component, Node, Prefab,
-    instantiate, Vec3, 
-    Size,
-    Sprite} from 'cc';
-    import { screen } from "cc";
-    import { UITransform } from "cc";
+import { _decorator, Component, Prefab, instantiate, Vec3, Size, screen, UITransform } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -12,38 +7,35 @@ export class BrickManager extends Component {
     @property(Prefab)
     brickPrefab: Prefab | null = null;
 
-    brickNode: Node = null;
-
-    time: Number = 0.0;
-
-    size: Size = Size.ZERO;
+    private windowSize: Size = Size.ZERO;
 
     start() {
-        this.size = screen.windowSize;
-        console.log(screen.windowSize);
-        var w = 640 / 6;
-        var h = w;
-        if (this.brickPrefab) {
-            for (var i = 0; i < 6; i++) {
-                var tmpBrickNode = instantiate(this.brickPrefab);
-                var transform = tmpBrickNode.getComponent(UITransform);
-                tmpBrickNode.parent = this.node;
-                transform.setContentSize(new Size(w, h));
-                console.log(i * w);
-                tmpBrickNode.setPosition(new Vec3(-320 + i * w + w / 2, 0, 0));
-            }
+        this.windowSize = screen.windowSize;
+        console.log(`Window Size: ${this.windowSize.width} x ${this.windowSize.height}`);
 
+        if (this.brickPrefab) {
+            this.spawnBricks(6, new Size(640 / 6, 640 / 6), -320);
         } else {
-            console.log('X- loaded brickPrefab');
+            console.error('Brick prefab not loaded');
         }
     }
 
-    update(deltaTime: number) {
-        
+    spawnBricks(count: number, size: Size, startX: number) {
+        const { width } = size;
+
+        for (let i = 0; i < count; i++) {
+            const brickNode = instantiate(this.brickPrefab);
+            const transform = brickNode.getComponent(UITransform);
+            if (transform) {
+                transform.setContentSize(size);
+            }
+
+            brickNode.setParent(this.node);
+            brickNode.setPosition(new Vec3(startX + i * width + width / 2, 0, 0));
+        }
     }
 
     someMethod() {
         console.log('someMethod is called');
     }
 }
-
