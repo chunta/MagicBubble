@@ -99,6 +99,10 @@
     "__prefab": {
       "__id__": 5
     },
+    "brickPrefab": {
+      "__uuid__": "1923e4ea-ea06-4eb4-a714-503ac49b4285",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": ""
   },
   {
@@ -114,6 +118,7 @@
       "__id__": 0
     },
     "fileId": "b6yK6RNf1Fm6zcsU/jAI4u",
+    "instance": null,
     "targetOverrides": null
   }
 ]

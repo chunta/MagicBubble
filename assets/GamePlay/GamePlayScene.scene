@@ -184,7 +184,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 360,
+    "_orthoHeight": 451.8592964824121,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -364,7 +364,7 @@
     "_string": "C",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 34.11111111111111,
+    "_actualFontSize": 24.875,
     "_fontSize": 20,
     "_fontFamily": "Arial",
     "_lineHeight": 40,

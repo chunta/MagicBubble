@@ -1,12 +1,15 @@
 import { _decorator, Component, Node, Prefab, 
-    instantiate, Vec3 } from 'cc';
+    instantiate, Vec3, 
+    macro} from 'cc';
 import { BrickManager } from './BrickManager';
+import { screen } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass('GamePlayScript')
 export class GamePlayScript extends Component {
     @property(Prefab)
     brickManagerPrefab: Prefab | null = null;
+    
     brickManager: Node = null;
 
 
@@ -16,11 +19,41 @@ export class GamePlayScript extends Component {
         this.spawnPrefab();
     }
 
+    onLoad() {
+        screen.on('window-resize', this.onWindowResize, this);
+        screen.on('orientation-change', this.onOrientationChange, this);
+        screen.on('fullscreen-change', this.onFullScreenChange, this);
+      }
+    
+      onDestroy() {
+        // Unregister event listeners when the component is destroyed
+        screen.off('window-resize', this.onWindowResize, this);
+        screen.off('orientation-change', this.onOrientationChange, this);
+        screen.off('fullscreen-change', this.onFullScreenChange, this);
+        
+      }
+    
+      onWindowResize(width: number, height: number) {
+        console.log("Window resized:", width, height);
+      }
+    
+      onOrientationChange(orientation: number) {
+        if (orientation === macro.ORIENTATION_LANDSCAPE_LEFT || orientation === macro.ORIENTATION_LANDSCAPE_RIGHT) {
+          console.log("Orientation changed to landscape:", orientation);
+        } else {
+          console.log("Orientation changed to portrait:", orientation);
+        }
+      }
+    
+      onFullScreenChange(width: number, height: number) {
+        console.log("Fullscreen change:", width, height);
+      }    
+
     update(deltaTime: number) {
-        console.log(this.speed);
     }
 
     spawnPrefab() {
+     
         if (this.brickManagerPrefab) {
             // Instantiate the prefab
             this.brickManager = instantiate(this.brickManagerPrefab);
