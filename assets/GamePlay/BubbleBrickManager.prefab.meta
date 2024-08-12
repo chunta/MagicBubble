@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "1923e4ea-ea06-4eb4-a714-503ac49b4285",
+  "uuid": "21c9eb97-6385-41a4-bfaf-0b42d1b53862",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "Brick"
+    "syncNodeName": "BubbleBrickManager"
   }
 }
