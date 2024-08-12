@@ -21,8 +21,8 @@ export class BubbleBrickManager extends Component {
 
   private col: number = 6;
   private row: number = 3;
+
   start() {
-    // Get the screen size
     const screenSize = view.getVisibleSize();
     console.log(`Screen Size: ${screenSize.width} x ${screenSize.height}`);
 
@@ -52,7 +52,6 @@ export class BubbleBrickManager extends Component {
     startY: number
   ) {
     const { width, height } = size;
-
     for (let r = 0; r < row; r++) {
       for (let c = 0; c < col; c++) {
         const brickNode = instantiate(this.brickPrefab);
@@ -60,7 +59,6 @@ export class BubbleBrickManager extends Component {
         if (transform) {
           transform.setContentSize(size);
         }
-
         brickNode.setParent(this.node);
         brickNode.setPosition(
           new Vec3(
@@ -69,6 +67,12 @@ export class BubbleBrickManager extends Component {
             0
           )
         );
+        const sprites = brickNode.children;
+        for (let s = 0; s < sprites.length; s++) {
+            const sprite = sprites[s];
+            const transform = sprite.getComponent(UITransform);
+            transform.setContentSize(size);
+        }
       }
     }
   }

@@ -6,6 +6,11 @@ import {
   instantiate,
   Vec3,
   macro,
+  view,
+  Vec2,
+  UITransform,
+  Size,
+  rendering,
 } from 'cc';
 import { BubbleBrickManager } from './BubbleBrickManager';
 import { screen } from 'cc';
@@ -18,10 +23,17 @@ export class GamePlayScript extends Component {
 
   brickManager: Node = null;
 
+  @property(Prefab)
+  shooterPrefab: Prefab = null;
+
+  shooter: Node = null;
+
   @property
   speed: number = 100;
+
   start() {
     this.spawnPrefab();
+    this.spawnShooter();
   }
 
   onLoad() {
@@ -79,6 +91,30 @@ export class GamePlayScript extends Component {
       }
     } else {
       console.error('Prefab is not assigned!');
+    }
+  }
+
+  spawnShooter() {
+    if (this.shooterPrefab) {
+      this.shooter = instantiate(this.shooterPrefab);
+
+      const screenSize = view.getVisibleSize();
+
+      const size = new Size(screenSize.width / 6, screenSize.width / 6 / 6);
+
+      const position = new Vec3(
+        screenSize.width / 6 - size.width / 2,
+        -screenSize.height / 2 + size.height / 2,
+        0
+      );
+
+      this.shooter.setPosition(position);
+
+      const transform = this.shooter.getComponent(UITransform);
+
+      transform.setContentSize(size);
+
+      this.shooter.parent = this.node;
     }
   }
 }
