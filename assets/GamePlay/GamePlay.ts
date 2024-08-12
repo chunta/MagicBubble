@@ -7,15 +7,14 @@ import {
   Vec3,
   macro,
   view,
-  Vec2,
   UITransform,
   Size,
-  rendering,
   PhysicsSystem2D,
   EPhysics2DDrawFlags,
 } from 'cc';
 import { BubbleBrickManager } from './BubbleBrickManager';
 import { screen } from 'cc';
+import { EDITOR } from 'cc/env';
 const { ccclass, property } = _decorator;
 
 @ccclass('GamePlayScript')
@@ -36,7 +35,14 @@ export class GamePlayScript extends Component {
   start() {
     this.spawnPrefab();
     this.spawnShooter();
-    PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
+
+    // Enable physics debug draw only in debug mode
+    if (EDITOR) {
+      PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
+    } else {
+      // Ensure debug draw is disabled in release mode
+      PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.None;
+    }
   }
 
   onLoad() {

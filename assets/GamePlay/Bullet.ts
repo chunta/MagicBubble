@@ -18,13 +18,17 @@ const { ccclass, property } = _decorator;
 
 @ccclass('Bullet')
 export class Bullet extends Component {
-  speed: number = 30;
-
   onLoad() {
     var collider = this.node.getComponent(CircleCollider2D);
     if (collider) {
       collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
     }
+    // Schedule self-destruction after 10 seconds
+    this.scheduleOnce(() => {
+      if (this.node && this.node.isValid) {
+        this.node.destroy();
+      }
+    }, 10);
   }
 
   onBeginContact(
@@ -33,10 +37,27 @@ export class Bullet extends Component {
     contact: IPhysics2DContact | null
   ) {
     console.log('onBeginContact ', otherCollider.name);
+    selfCollider.enabled = false;
+    otherCollider.enabled = false;
+    // Schedule the destruction for the next frame
+    this.scheduleOnce(() => {
+      if (this.node && this.node.isValid) {
+        this.node.destroy();
+      }
+      if (otherCollider.node && otherCollider.node.isValid) {
+        otherCollider.node.destroy();
+      }
+    }, 0);
   }
 
   update(deltaTime: number) {
     const rigidBody2D = this.node.getComponent(RigidBody2D);
-    rigidBody2D.linearVelocity = new Vec2(0, 7);
+    if (rigidBody2D) {
+      rigidBody2D.linearVelocity = new Vec2(0, 11);
+    }
+  }
+
+  onDestroy() {
+    console.log('Bullet destroyed');
   }
 }

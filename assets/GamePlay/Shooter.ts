@@ -27,7 +27,7 @@ export class Shooter extends Component {
 
   update(deltaTime: number) {
     this.coolDown = this.coolDown + deltaTime;
-    this.allowedKeyAction = this.coolDown > 0.5;
+    this.allowedKeyAction = this.coolDown > 0.3;
   }
 
   onKeyDown(event) {
