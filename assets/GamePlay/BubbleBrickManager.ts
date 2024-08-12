@@ -59,7 +59,11 @@ export class BubbleBrickManager extends Component {
         if (transform) {
           transform.setContentSize(size);
         }
-        brickNode.setParent(this.node);
+
+        // Find the Canvas node in the scene
+        const canvasNode = this.node.scene.getChildByName('Canvas');
+
+        brickNode.setParent(canvasNode);
         brickNode.setPosition(
           new Vec3(
             startX + c * width + width / 2,
