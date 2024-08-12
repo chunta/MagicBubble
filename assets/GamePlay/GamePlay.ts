@@ -11,6 +11,8 @@ import {
   UITransform,
   Size,
   rendering,
+  PhysicsSystem2D,
+  EPhysics2DDrawFlags,
 } from 'cc';
 import { BubbleBrickManager } from './BubbleBrickManager';
 import { screen } from 'cc';
@@ -34,6 +36,7 @@ export class GamePlayScript extends Component {
   start() {
     this.spawnPrefab();
     this.spawnShooter();
+    PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
   }
 
   onLoad() {

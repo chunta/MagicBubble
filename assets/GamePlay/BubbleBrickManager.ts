@@ -8,6 +8,7 @@ import {
   screen,
   UITransform,
   view,
+  BoxCollider2D,
 } from 'cc';
 
 const { ccclass, property } = _decorator;
@@ -71,12 +72,16 @@ export class BubbleBrickManager extends Component {
             0
           )
         );
+
         const sprites = brickNode.children;
         for (let s = 0; s < sprites.length; s++) {
-            const sprite = sprites[s];
-            const transform = sprite.getComponent(UITransform);
-            transform.setContentSize(size);
+          const sprite = sprites[s];
+          const transform = sprite.getComponent(UITransform);
+          transform.setContentSize(size);
         }
+
+        const collision2d = brickNode.getComponent(BoxCollider2D);
+        collision2d.size = size;
       }
     }
   }

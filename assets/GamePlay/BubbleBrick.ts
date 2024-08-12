@@ -1,9 +1,12 @@
 import {
   _decorator,
+  BoxCollider,
+  BoxCollider2D,
   Color,
   Component,
   Graphics,
   UITransform,
+  Vec3,
 } from 'cc';
 const { ccclass } = _decorator;
 import { ColorEnum } from './BubbleColorEnum';
@@ -17,14 +20,31 @@ export class BubbleBrick extends Component {
   onLoad() {
     // Get the bounding box of the node
     var transform = this.node.getComponent(UITransform);
-    let boundingBox = transform.getBoundingBox();
+    var boundingBox = transform.getBoundingBox();
 
     // Get the Graphics component
     let graphics = this.getComponent(Graphics);
 
     // Set the line color and width
-    graphics.lineWidth = 2;
-    graphics.strokeColor = Color.RED;
+    graphics.lineWidth = 3;
+    graphics.strokeColor = Color.WHITE;
+
+    // Draw the bounding box
+    graphics.rect(
+      boundingBox.xMin,
+      boundingBox.yMin,
+      boundingBox.width,
+      boundingBox.height
+    );
+    graphics.stroke();
+
+    var collider = this.node.getComponent(BoxCollider2D);
+    collider.enabled = true;
+    transform = collider.getComponent(UITransform);
+    boundingBox = transform.getBoundingBox();
+
+    graphics.lineWidth = 1;
+    graphics.strokeColor = Color.BLUE;
 
     // Draw the bounding box
     graphics.rect(
